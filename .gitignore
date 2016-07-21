@@ -1,0 +1,17 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build
+
+# Dependency directory
+node_modules
+
+
+# WebStorm project file directory
+.idea
