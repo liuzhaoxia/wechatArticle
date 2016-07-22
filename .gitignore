@@ -1,16 +1,52 @@
+# OSX
+#
+.DS_Store
+
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android/IJ
+#
+*.iml
+.idea
+.gradle
+local.properties
+
+# node.js
+#
+node_modules/
+npm-debug.log
+
+# BUCK
+buck-out/
+\.buckd/
+android/app/libs
+android/keystores/debug.keystore
+
+
+android/gradle
+
 # Logs
 logs
 *.log
 npm-debug.log*
-
-# Coverage directory used by tools like istanbul
-coverage
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build
-
-# Compiled android binary directory
-android/.gradle
 
 # Dependency directory
 node_modules
