@@ -9,6 +9,9 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build
 
+# Compiled android binary directory
+android/.gradle
+
 # Dependency directory
 node_modules
 
