@@ -1,28 +1,40 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider,connect } from 'react-redux';
 import { Router, Scene } from 'react-native-router-flux';
-import login2 from './src/components/Login2';
-import login3 from './src/components/Login3';
-import login from './src/containers/Login';
+import login2 from './../../components/android/Login2';
+import login3 from './../../components/android/Login3';
+import login from './Login';
 
-import reducers from './src/reducers/index';
-
-const RouterWithRedux = connect()(Router);
-const middleware = [/* ...your middleware (i.e. thunk) */];
-const store = compose(
-    applyMiddleware(...middleware)
-)(createStore)(reducers);
-
+import routeReducerCreator from './../../reducers/routeReducerCreator';
+import helper from './../../utils/helper'
+import { api, callApi } from  './../../apis/api'
+import Button from "react-native-button";
+import store from './../../store/store'
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        helper.bindMethod(this);
+    }
+
+    testApi(){
+        const parameter ={userNickName:"mayunfei",userPassword:"test"};
+        callApi(
+            api.test(parameter),
+            (data)=>console.log(data),
+            (err)=>console.log(err)
+        );
+    }
+
     render () {
         return (
             <Provider store={store}>
-                <RouterWithRedux>
+                <Router createReducer={routeReducerCreator}>
                     <Scene key="login" direction="vertical" initial={true}>
                         <Scene key="loginModal" direction="vertical" component={login} title="Login" />
                         <Scene
@@ -42,9 +54,13 @@ class App extends React.Component {
                             duration={1}
                         />
                     </Scene>
-                </RouterWithRedux>
+                </Router>
             </Provider>
         );
+        //
+        //return(
+        //    <Button onPress={this.testApi}>测试服务</Button>
+        //);
     }
 }
 

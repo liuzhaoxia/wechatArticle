@@ -2,12 +2,12 @@
  * Created by wangtun on 2016/7/21.
  */
 import { combineReducers } from 'redux';
-import routes from './routes';
-import Login from './Login'
+import loginReducer from './loginReducer';
 // ... other reducers
 
-export default combineReducers({
-    routes,
-    Login,
+const rootReducer = combineReducers({
+    loginReducer
     // ... other reducers
 });
+
+export default rootReducer;
