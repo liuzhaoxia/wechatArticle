@@ -1,7 +1,7 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
-import 'babel-polyfill';
+
 import React, { Component } from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider,connect } from 'react-redux';

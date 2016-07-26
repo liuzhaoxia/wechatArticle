@@ -1,7 +1,6 @@
 /**
  * Created by 28203 on 2016/5/29 0029.
  */
-import fetch from 'isomorphic-fetch'
 
 const fetchMethod = {
     Get: "GET",
