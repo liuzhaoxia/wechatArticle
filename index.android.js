@@ -4,6 +4,6 @@
  * @flow
  */
 import { AppRegistry } from 'react-native';
-import app from './app'
+import app from './src/containers/android/app'
 
 AppRegistry.registerComponent('wechatArticle', () => app);
