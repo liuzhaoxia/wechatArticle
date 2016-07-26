@@ -20,7 +20,7 @@ class Login2 extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>Login2 page: {this.props.data}</Text>
-                <Button onPress={Actions.pop}>Back</Button>
+                <Button onPress={Actions.pop}>Back1111</Button>
                 <Button onPress={Actions.loginModal3}>Login 3</Button>
             </View>
         );
