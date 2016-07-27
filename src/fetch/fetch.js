@@ -30,6 +30,7 @@ function createFetch(url, method, jsonObj) {
                 const options = {
                     method: fetchMethod.Get
                 };
+                console.log(urlWithQueryStr);
                 return fetch(urlWithQueryStr, options);
             }
             break;
@@ -40,6 +41,7 @@ function createFetch(url, method, jsonObj) {
                     method: fetchMethod.Post,
                     body: queryStr
                 };
+                console.log(url);
                 return fetch(url, options);
             }
             break;

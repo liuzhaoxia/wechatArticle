@@ -74,6 +74,7 @@ class Login extends Component {
         this.login = this.login.bind(this);
     }
     login() {
+        console.log("test");
         const username = this.refs.username._lastNativeText;
         const password = this.refs.password._lastNativeText;
         const data = {
