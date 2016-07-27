@@ -12,6 +12,7 @@ import main from './../../components/android/Main';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import helper from './../../utils/helper'
 import store from './../../store/store';
+import info from './../../containers/android/MessInfo'
 
 class App extends React.Component {
     constructor(props) {
