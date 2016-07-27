@@ -6,6 +6,11 @@ const api = {
         `${appConfig.serviceRoot}service/man/userInfo/login`,
         fetchMethod.Get,
         {parameter: parameter}
+    ),
+    login: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}app/login`,
+        fetchMethod.Get,
+        {parameter: parameter}
     )
 };
 

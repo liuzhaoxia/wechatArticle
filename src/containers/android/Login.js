@@ -1,9 +1,10 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
-import React from 'react';
+import React,{Component} from 'react';
 import {View, Text, StyleSheet,TextInput,Image} from "react-native";
 import { connect } from 'react-redux'
+import  {bindActionCreators} from 'redux'
 import Button from "react-native-button";
 import loginActions from '../../actions/loginActions'
 
@@ -65,30 +66,46 @@ const styles = StyleSheet.create({
     },
 });
 
+class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+        this.login = this.login.bind(this);
+    }
+    login() {
+        const username = this.refs.username._lastNativeText;
+        const password = this.refs.password._lastNativeText;
+        const data = {
+                username: username,
+                password: password
+        };
+        this.props.loginRequest(data);
 
-const Login = (props) => {
-    const {login} = props.actions;
-    return (
-        <View style={styles.container}>
-            <View style={styles.avatarview}>
-                <Image source={require('../../image/logo.png')} style={styles.avatarimage}/>
-                <Text style={styles.loginName} >电 桩</Text>
+    }
+    render(){
+        return (
+            <View style={styles.container}>
+                <View style={styles.avatarview}>
+                    <Image source={require('../../image/logo.png')} style={styles.avatarimage}/>
+                    <Text style={styles.loginName} >电 桩</Text>
+                </View>
+                <View style={styles.driver}>
+                    <TextInput placeholder="请输入用户名" placeholderTextColor ='#E0E0E0'  style={styles.textinput} underlineColorAndroid='transparent'
+                               keyboardType = 'default' ref="username">
+                    </TextInput>
+                </View>
+                <View style={styles.driver1}>
+                    <TextInput placeholder="请输入密码" placeholderTextColor ='#E0E0E0' style={styles.textinput} underlineColorAndroid='transparent'
+                               secureTextEntry  ={true} keyboardType = 'default' ref="password">
+                    </TextInput>
+                </View>
+                <View style={styles.buttonview}>
+                    <Text style={styles.logintext} onPress={this.login}>登 录</Text>
+                </View>
             </View>
-            <View style={styles.driver}>
-                <TextInput placeholder="请输入用户名" placeholderTextColor ='#E0E0E0'  style={styles.textinput} underlineColorAndroid='transparent'
-                           keyboardType = 'default'>
-                </TextInput>
-            </View>
-            <View style={styles.driver1}>
-                <TextInput placeholder="请输入密码" placeholderTextColor ='#E0E0E0' style={styles.textinput} underlineColorAndroid='transparent'
-                           secureTextEntry  ={true} keyboardType = 'default'>
-                </TextInput>
-            </View>
-            <View style={styles.buttonview}>
-                <Text style={styles.logintext} >登 录</Text>
-            </View>
-        </View>
-    );
+        );
+    }
 };
 
 function mapStateToProps(state) {
@@ -100,11 +117,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        actions:{
-            login:() => dispatch(loginActions.login())
-        }
-    }
+    return bindActionCreators(loginActions, dispatch);
 }
 
 export default connect(
