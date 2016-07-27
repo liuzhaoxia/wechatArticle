@@ -4,6 +4,7 @@
 import { createAction } from 'redux-actions';
 import loginActionEnum from '../constants/loginActionEnum'
 import {api} from '../apis/api'
+import {Actions} from "react-native-router-flux";
 const loginActions = {
     login: createAction(loginActionEnum.LOGIN_REQUEST),
     loginRequest: (data)=> {
@@ -19,7 +20,7 @@ const loginActions = {
                 .then(response=>response.json())
                 .then(jsonResult=> {
                     if (jsonResult.errcode === 0) {
-                        console.warn(jsonResult.data);
+                        Actions.ListView();
                     } else {
                         console.warn(jsonResult.errmsg);
                     }
