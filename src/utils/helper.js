@@ -4,7 +4,7 @@
 
 const helper = {
     bindMethod: (obj)=> {
-        const members = Reflect.ownKeys(obj.__proto__);
+        const members = Object.getOwnPropertyNames(obj.__proto__);
         for (let member of members) {
             if (typeof(obj[member]) === 'function') {
                 if (!helper.isReactLifeCycleMethod(member)) {
