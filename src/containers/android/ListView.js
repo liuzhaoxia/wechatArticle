@@ -6,6 +6,8 @@ import {View, Text, StyleSheet,TextInput,Image,ListView} from "react-native";
 import { connect } from 'react-redux'
 import Button from "react-native-button";
 import Swipeout  from "react-native-swipeout";
+import loginActions from '../../actions/loginActions'
+import  {bindActionCreators} from 'redux'
 const styles = StyleSheet.create({
     row: {
         borderBottomColor: '#E0E0E0',
@@ -29,20 +31,26 @@ const styles = StyleSheet.create({
         marginLeft: 3
     }
 });
-const listView = (props) => {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const dataSource = ds.cloneWithRows([{
-        url: '../image/logo.png', title: '第四代活塞,谁发的第四代活塞,谁发的第四代活塞,谁发的', author: '张三', data: '2016-01-01'
-    }, {
-        url: '/src/image/login.png',
-        title: '库克将怒火几年级',
-        author: 'lily',
-        data: '2016-08-08'
-    }]);
-    return (
-        <ListView
-            dataSource={dataSource}
-            renderRow={(rowData) =>
+class listView extends Component {
+    constructor(props) {
+        super(props);
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+            dataSource :ds.cloneWithRows([{
+                url: '../image/logo.png', title: '第四代活塞,谁发的第四代活塞,谁发的第四代活塞,谁发的', author: '张三', data: '2016-01-01'
+            }, {
+                url: '/src/image/login.png',
+                title: '库克将怒火几年级',
+                author: 'lily',
+                data: '2016-08-08'
+            }])
+        };
+    }
+    render() {
+        return (
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={(rowData) =>
             <Swipeout right={[{text:'删除',backgroundColor:'red'}]} backgroundColor={'#FFF'}>
                 <View style={styles.row}>
                     <View>
@@ -63,11 +71,23 @@ const listView = (props) => {
                 </View>
             </Swipeout>
             }
-        />
-    );
+            />
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        state:{
+        }
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(loginActions, dispatch);
 }
 
 export default connect(
-    (state) => ({
-    })
+    mapStateToProps,
+    mapDispatchToProps
 )(listView)
