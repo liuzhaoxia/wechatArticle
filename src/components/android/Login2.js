@@ -1,7 +1,7 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
-import React from 'react';
+import React ,{Component}from 'react';
 import {View, Text, StyleSheet} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
 });
 
-class Login2 extends React.Component {
+class Login2 extends Component {
     render(){
         return (
             <View style={styles.container}>

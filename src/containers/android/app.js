@@ -2,7 +2,7 @@
  * Created by wangtun on 2016/7/21.
  */
 import 'babel-polyfill';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider,connect } from 'react-redux';
 import { Router, Scene } from 'react-native-router-flux';
@@ -15,7 +15,7 @@ import helper from './../../utils/helper'
 import { api, callApi } from  './../../apis/api'
 import Button from "react-native-button";
 import store from './../../store/store';
-class App extends React.Component {
+class App extends Component {
     constructor(props) {
         super(props);
         helper.bindMethod(this);
