@@ -7,6 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Router, Scene, Modal } from 'react-native-router-flux';
 import login from './../../containers/android/Login';
+import ListView from './../../containers/android/ListView';
 import main from './../../components/android/Main';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import helper from './../../utils/helper'
@@ -29,6 +30,8 @@ class App extends React.Component {
                                        hideNavBar/>
                             </Scene>
                             <Scene key="main" direction="vertical" component={main} title="Main"
+                                   hideNavBar/>
+                            <Scene key="ListView" direction="vertical" component={ListView} title="ListView"
                                    hideNavBar/>
                         </Scene>
                         <Scene key="error" component={Error}/>
