@@ -32,7 +32,7 @@ class App extends React.Component {
                             <Scene key="main" direction="vertical" component={main} title="Main"
                                    hideNavBar/>
                             <Scene key="ListView" direction="vertical" component={ListView} title="ListView"
-                                   hideNavBar/>
+                                                       hideNavBar/>
                         </Scene>
                         <Scene key="error" component={Error}/>
                     </Scene>
