@@ -36,14 +36,13 @@ class listView extends Component {
         super(props);
         //let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-
+            pageNum:1
         };
         this.getAllList = this.getAllList.bind(this);
         this.pressRow = this.pressRow.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-
         });
     }
 
@@ -54,8 +53,16 @@ class listView extends Component {
     pressRow(id) {
         this.props.toDesOfList(id);
     }
-    getAllList(aa) {
-        alert(aa);
+    getAllList() {
+        const pageNum = this.state.pageNum;
+
+        const pageTotal = Math.ceil(this.props.state.totalNum/10);
+        if (pageNum<pageTotal) {
+            this.state.pageNum = pageNum+1;
+            this.setState({pageNum: this.state.pageNum});
+            this.props.getListRequest(pageNum+1);
+        }
+
     }
     render() {
        let data = this.props.state.listData;
