@@ -11,6 +11,11 @@ const api = {
         `${appConfig.serviceRoot}app/listAll`,
         fetchMethod.Get,
         {parameter: parameter}
+    ),
+    getArticleInfo: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}test/sql/select`,
+        fetchMethod.Get,
+        {parameter: parameter}
     )
 };
 

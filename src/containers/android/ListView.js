@@ -2,11 +2,11 @@
  * Created by zhaohang on 2016/7/25.
  */
 import React ,{Component}from 'react';
-import {View, Text, StyleSheet,TextInput,Image,ListView,TouchableHighlight} from "react-native";
+import {View, Text, StyleSheet,TextInput,Image,ListView} from "react-native";
 import { connect } from 'react-redux'
 import Button from "react-native-button";
 import Swipeout  from "react-native-swipeout";
-import listViewActions from '../../actions/listViewActions'
+import loginActions from '../../actions/loginActions'
 import  {bindActionCreators} from 'redux'
 const styles = StyleSheet.create({
     row: {
@@ -34,42 +34,27 @@ const styles = StyleSheet.create({
 class listView extends Component {
     constructor(props) {
         super(props);
-        //let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-
+            dataSource :ds.cloneWithRows([{
+                url: '../image/logo.png', title: '第四代活塞,谁发的第四代活塞,谁发的第四代活塞,谁发的', author: '张三', data: '2016-01-01'
+            }, {
+                url: '/src/image/login.png',
+                title: '库克将怒火几年级',
+                author: 'lily',
+                data: '2016-08-08'
+            }])
         };
-        this.getAllList = this.getAllList.bind(this);
-        this.pressRow = this.pressRow.bind(this);
-    }
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-
-        });
-    }
-
-    componentWillMount() {
-        //控件加载的时候先发起服务请求
-        this.props.getListRequest(1);
-    }
-    pressRow(id) {
-        this.props.toDesOfList(id);
-    }
-    getAllList(aa) {
-        alert(aa);
     }
     render() {
-       let data = this.props.state.listData;
-       let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-       let dataSource = ds.cloneWithRows(data);
         return (
-            <ListView  enableEmptySections = {true} onEndReached = {this.getAllList} onEndReachedThreshold = {20}
-                       dataSource={dataSource}
+            <ListView
+                dataSource={this.state.dataSource}
                 renderRow={(rowData) =>
-                 <Swipeout right={[{text:'删除',backgroundColor:'red'}]} backgroundColor={'#FFF'}>
-                 <TouchableHighlight onPress={() => this.pressRow(rowData.id)}>
+            <Swipeout right={[{text:'删除',backgroundColor:'red'}]} backgroundColor={'#FFF'}>
                 <View style={styles.row}>
                     <View>
-                        <Image style={styles.thumb} source={{uri:rowData.image}} />
+                        <Image style={styles.thumb} source={require('../../image/login.png')} />
                     </View>
                     <View>
                         <View>
@@ -79,15 +64,12 @@ class listView extends Component {
                         </View>
                         <View>
                              <Text style={styles.desc}>
-                                  {rowData.author}  {rowData.date}
+                                  {rowData.author}  {rowData.data}
                              </Text>
                         </View>
                     </View>
                 </View>
-                </TouchableHighlight>
             </Swipeout>
-
-
             }
             />
         );
@@ -96,12 +78,13 @@ class listView extends Component {
 
 function mapStateToProps(state) {
     return {
-        state:state.listViewReducer
+        state:{
+        }
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(listViewActions, dispatch);
+    return bindActionCreators(loginActions, dispatch);
 }
 
 export default connect(
