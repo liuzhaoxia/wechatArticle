@@ -11,12 +11,10 @@ const listViewActions = {
     setListView:createAction(listViewActionEnum.SET_LIST_VIEW),
     toDesOfList: (data)=> {
         return dispatch=> {
+            let p={tableName:"article",condition:"id = "+data};
             dispatch(
-                listViewActions.setListView(data)
-            );
-            dispatch(
-                articleInfoAction.setArticleId(data),
-                Actions.ArticleInfo()
+                articleInfoAction.getArticleInfoById(p)
+
             );
         }
     },

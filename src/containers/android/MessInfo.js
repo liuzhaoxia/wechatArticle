@@ -38,20 +38,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderBottomColor:'#FFFFFF',
         borderBottomWidth:1
+
     },
-    buttonview: {
+    textView: {
         backgroundColor: '#1DBAF1',
         margin: 20,
         borderRadius: 6,
-        justifyContent: 'center',
-        alignItems: 'center'
+        width:75
     },
-    logintext: {
+    infoText: {
         fontSize: 17,
         color: '#FFFFFF',
         marginTop: 10,
-        marginBottom: 10
-    },
+        marginBottom: 10,
+        width:70
+    }
 });
 class MessInfo extends React.Component {
     // 初始化模拟数据
@@ -59,25 +60,50 @@ class MessInfo extends React.Component {
         super(props);
         this.state={
             language:"",
-            infoDataId:this.props.infoDataId,
             infoData:this.props.infoData
         };
+        this.updateArticle=this.updateArticle.bind(this);
+        this.backListView=this.backListView.bind(this);
+        this.addArticle=this.addArticle.bind(this);
+    }
+
+    updateArticle(){
+        let title = this.refs.title._lastNativeText;
+        let url = this.refs.url._lastNativeText;
+        let author=this.refs.author._lastNativeText;
+        let pickerDate=this.refs.pickerDate.value;
+        let p={
+            tableName:"article",
+            filed:" title="+title+",url="+url+",author="+author+",type="+this.state.language,
+            condition:"id = "+this.state.infoData.id
+        };
+        this.props.updateArticleInfoById(p);
+    }
+
+    backListView(){
+
+    }
+
+    addArticle(){
+        let title = this.refs.title._lastNativeText;
+        let url = this.refs.url._lastNativeText;
+        let author=this.refs.author._lastNativeText;
+        let pickerDate=this.refs.pickerDate.value;
+        let p={
+            tableName:"article",
+            filed:" title="+title+",url="+url+",author="+author+",type="+this.state.language,
+            condition:"id = "+this.state.infoData.id
+        };
+        this.props.addArticleInfoById(p);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            infoDataId:nextProps.infoDataId,
             infoData:nextProps.infoData
         });
     }
 
-    componentWillMount() {
-        //控件加载的时候先发起服务请求
-        //var p={tableName:"article",condition:"id = "+this.state.infoDataId}
-        alert(114);
-        var p={tableName:"article",condition:"id = 114"}
-        this.props.getArticleInfoById(p);
-    }
+
 
     render(){
         return (
@@ -87,7 +113,9 @@ class MessInfo extends React.Component {
                         <Text style={styles.textTitle}>文章名称:</Text>
                     </View>
                     <View style={{borderBottomColor:'#FFFFFF',borderBottomWidth:1}}>
-                           <TextInput placeholder="请输入文章名称" placeholderTextColor ='#E0E0E0' underlineColorAndroid='transparent'  style={styles.inputText} value={this.state.infoData.title}>
+                           <TextInput placeholder="请输入文章名称" placeholderTextColor ='#E0E0E0'
+                                      underlineColorAndroid='transparent'  style={styles.inputText}
+                                      value={this.state.infoData.title} ref="title">
 
                            </TextInput>
                     </View>
@@ -99,7 +127,11 @@ class MessInfo extends React.Component {
                     </View>
                     <View style={{borderBottomColor:'#FFFFFF',borderBottomWidth:1}}>
 
-                            <TextInput placeholder="请输入文章链接" placeholderTextColor ='#E0E0E0' underlineColorAndroid='transparent' style={styles.inputText}></TextInput>
+                            <TextInput placeholder="请输入文章链接" placeholderTextColor ='#E0E0E0'
+                                       underlineColorAndroid='transparent' style={styles.inputText}
+                                       value={this.state.infoData.url} ref="url">
+
+                            </TextInput>
 
                     </View>
                 </View>
@@ -111,11 +143,13 @@ class MessInfo extends React.Component {
                         <Picker
                             mode={'dropdown'}
                             prompt="请选择文章类型"
+                            ref="type"
                             style={styles.inputText} placeholderTextColor ='#E0E0E0' underlineColorAndroid='transparent'
-                            selectedValue={this.state.language}
+                            selectedValue={this.state.infoData.type}
                             onValueChange={(lang) =>this.setState({language: lang})}>
-                            <Picker.Item label="测试" value="test" />
-                            <Picker.Item label="开发" value="js" />
+                            <Picker.Item label="测试" value="0" />
+                            <Picker.Item label="开发" value="1" />
+                            <Picker.Item label="杂记" value="2" />
                         </Picker>
                     </View>
                 </View>
@@ -124,7 +158,11 @@ class MessInfo extends React.Component {
                         <Text style={styles.textTitle}>文章作者:</Text>
                     </View>
                     <View style={{borderBottomColor:'#FFFFFF',borderBottomWidth:1}}>
-                        <TextInput placeholder="请输入文章作者" placeholderTextColor ='#E0E0E0' underlineColorAndroid='transparent' style={styles.inputText}></TextInput>
+                        <TextInput placeholder="请输入文章作者" placeholderTextColor ='#E0E0E0'
+                                   underlineColorAndroid='transparent' style={styles.inputText}
+                                   value={this.state.infoData.author} ref="author">
+
+                        </TextInput>
 
                     </View>
                 </View>
@@ -133,7 +171,7 @@ class MessInfo extends React.Component {
                         <Text style={styles.textTitle}>发表时间:</Text>
                     </View>
                     <View style={{borderBottomColor:'#FFFFFF',borderBottomWidth:1}}>
-                        <DataPickerDemo underlineColorAndroid='transparent'/>
+                        <DataPickerDemo Times={this.state.infoData.date}   underlineColorAndroid='transparent'/>
                     </View>
                 </View>
                 <View style={styles.container}>
@@ -146,11 +184,14 @@ class MessInfo extends React.Component {
                 </View>
 
                 <View style={styles.container}>
-                    <View style={styles.buttonview}>
-                        <Text style={styles.logintext} onPress={this.login}>修改</Text>
+                    <View style={styles.textView}>
+                        <Text style={styles.infoText} onPress={this.updateArticle}>修改</Text>
                     </View>
-                    <View style={styles.buttonview}>
-                        <Text style={styles.logintext} onPress={this.login}>返回</Text>
+                    <View style={styles.textView}>
+                        <Text style={styles.infoText} onPress={this.addArticle}>新增</Text>
+                    </View>
+                    <View style={styles.textView}>
+                        <Text style={styles.infoText} onPress={this.backListView}>返回</Text>
                     </View>
                 </View>
 
@@ -162,7 +203,6 @@ class MessInfo extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        infoDataId:state.articleInfoReducer.infoDataId,
         infoData:state.articleInfoReducer.infoData
     }
 }

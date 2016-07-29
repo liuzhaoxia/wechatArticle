@@ -16,6 +16,16 @@ const api = {
         `${appConfig.serviceRoot}test/sql/select`,
         fetchMethod.Get,
         {parameter: parameter}
+    ),
+    updateArticleInfo: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}test/sql/update`,
+        fetchMethod.Get,
+        {parameter: parameter}
+    ),
+    addArticleInfo: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}test/sql/add`,
+        fetchMethod.Get,
+        {parameter: parameter}
     )
 };
 

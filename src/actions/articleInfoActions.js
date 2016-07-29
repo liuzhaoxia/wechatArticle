@@ -13,18 +13,38 @@ const articleInfoActions = {
         return dispatch=> {
             callApi(
                 api.getArticleInfo(data),
-                (data)=>dispatch(articleInfoActions.requestArticleSuccess(data)),
+                (data)=>dispatch(articleInfoActions.getArticleInfoRequest(data)),
                 (err)=>console.warn(err)
             );
         }
     },
-    requestArticleSuccess: (data)=> {
+    getArticleInfoRequest: (data)=> {
         return dispatch=> {
             dispatch(
                 articleInfoActions.setArticleData(data)
             );
+            dispatch(Actions.ArticleInfo());
+        }
+    },
+    updateArticleInfoById: (data)=> {
+        return dispatch=> {
+            callApi(
+                api.updateArticleInfo(data),
+                (data)=>dispatch(articleInfoActions.getArticleInfoRequest(data)),
+                (err)=>console.warn(err)
+            );
+        }
+    },
+    addArticleInfoById: (data)=> {
+        return dispatch=> {
+            callApi(
+                api.updateArticleInfo(data),
+                (data)=>dispatch(articleInfoActions.getArticleInfoRequest(data)),
+                (err)=>console.warn(err)
+            );
         }
     }
+
 
 }
 

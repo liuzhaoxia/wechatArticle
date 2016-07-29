@@ -6,19 +6,13 @@ import articleInfoActions  from '../actions/articleInfoActions'
 import {ListView} from "react-native";
 
 const initialState = {
-    infoDataId :114,
-    infoData:[]
+    infoData:{}
 };
 
 const articleInfoReducer = handleActions({
-    [articleInfoActions.setArticleId]: (state, action) => {
-        state = Object.assign({}, state);
-        state.infoDataId = action.payload;
-        return state;
-    },
     [articleInfoActions.setArticleData]: (state, action) => {
         state = Object.assign({}, state);
-        state.infoData = action.payload;
+        state.infoData = action.payload[0];
         return state;
     }
 

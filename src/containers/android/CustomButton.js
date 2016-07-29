@@ -17,7 +17,7 @@ class CustomButton extends React.Component {
                 style={styles.button}
                  underlineColorAndroid='transparent'
                 onPress={this.props.onPress}>
-                <Text style={styles.dateT}>{this.props.text}</Text>
+                <Text ref="pickerDate" style={styles.dateT}>{this.props.text}</Text>
             </TouchableHighlight>
         );
     }
@@ -25,6 +25,7 @@ class CustomButton extends React.Component {
 class DataPickerDemo extends Component {
     constructor(props){
         super(props);
+
         this.state={
             presetDate: new Date(2016, 3, 5),
             allDate: new Date(2020, 4, 5),
@@ -53,9 +54,10 @@ class DataPickerDemo extends Component {
     }
 
     render() {
+        let date=this.props.Times;
         return (
             <View>
-                <CustomButton text={this.state.minText}
+                <CustomButton text={date}
                               onPress={this.showPicker.bind(this, 'min', {date: this.state.minDate,minDate:new Date()})}/>
             </View>
         );
