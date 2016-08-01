@@ -3,62 +3,41 @@
  */
 import React, { Component } from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider,connect } from 'react-redux';
-import { Router, Scene } from 'react-native-router-flux';
+import { Provider, connect } from 'react-redux';
+import { Router, Scene, Modal } from 'react-native-router-flux';
 import login from './../../containers/android/Login';
 import ListView from './../../containers/android/ListView';
-import login2 from './../../components/android/Login2';
-import login3 from './../../components/android/Login3';
+import main from './../../components/android/Main';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import helper from './../../utils/helper'
-import { api, callApi } from  './../../apis/api'
-import Button from "react-native-button";
 import store from './../../store/store';
-class App extends Component {
+
+
+class App extends React.Component {
     constructor(props) {
         super(props);
         helper.bindMethod(this);
     }
-
-    testApi(){
-        const parameter ={userNickName:"mayunfei",userPassword:"test"};
-        callApi(
-            api.test(parameter),
-            (data)=>console.log(data),
-            (err)=>console.log(err)
-        );
-    }
-
-    render () {
+    render() {
         return (
             <Provider store={store}>
                 <Router createReducer={routeReducerCreator}>
-                    <Scene key="login" direction="vertical" initial={true}>
-                        <Scene key="loginModal" direction="vertical" component={login} title="Login" hideNavBar/>
-                        <Scene
-                            key="loginModal2"
-                            hideNavBar
-                            component={login2}
-                            title="Login2"
-                            panHandlers={null}
-                            duration={1}
-                        />
-                        <Scene
-                            key="loginModal3"
-                            hideNavBar
-                            component={login3}
-                            title="Login3"
-                            panHandlers={null}
-                            duration={1}
-                        />
+                    <Scene key="modal" component={Modal}>
+                        <Scene key="root" hideNavBar hideTabBar>
+                            <Scene key="loginModule" direction="vertical" initial={true}>
+                                <Scene key="login" component={login} title="Login"
+                                       hideNavBar/>
+                            </Scene>
+                            <Scene key="main" direction="vertical" component={main} title="Main"
+                                   hideNavBar/>
+                            <Scene key="ListView" direction="vertical" component={ListView} title="ListView"
+                                                       hideNavBar/>
+                        </Scene>
+                        <Scene key="error" component={Error}/>
                     </Scene>
                 </Router>
             </Provider>
         );
-        //
-        //return(
-        //    <Button onPress={this.testApi}>测试服务</Button>
-        //);
     }
 }
 

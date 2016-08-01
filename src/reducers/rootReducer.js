@@ -3,10 +3,11 @@
  */
 import { combineReducers } from 'redux';
 import loginReducer from './loginReducer';
+import listViewReducer from './listViewReducer';
 // ... other reducers
 
 const rootReducer = combineReducers({
-    loginReducer
+    loginReducer,listViewReducer
     // ... other reducers
 });
 

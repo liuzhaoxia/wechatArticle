@@ -3,32 +3,19 @@
  */
 import { createAction } from 'redux-actions';
 import loginActionEnum from '../constants/loginActionEnum'
-import {api} from '../apis/api'
+import { api, callApi } from '../apis/api'
+import { Actions } from "react-native-router-flux";
 const loginActions = {
     login: createAction(loginActionEnum.LOGIN_REQUEST),
-    loginRequest: (data)=> {
+    loginRequest: (parameter)=> {
         return dispatch=> {
-            api.login(data)
-                .then(response=> {
-                    if (response.ok) {
-                        return response;
-                    } else {
-                        console.warn("出错了");
-                    }
-                })
-                .then(response=>response.json())
-                .then(jsonResult=> {
-                    if (jsonResult.errcode === 0) {
-                        console.warn(jsonResult.data);
-                    } else {
-                        console.warn(jsonResult.errmsg);
-                    }
-                })
-                .catch(error=> {
-                    console.warn(error);
-                });
+            callApi(
+                api.login(parameter),
+                (data)=>Actions.ListView(),
+                (err)=>console.warn(err)
+            );
         }
-    },
+    }
 };
 
 export default loginActions;

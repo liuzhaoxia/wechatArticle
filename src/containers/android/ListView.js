@@ -2,10 +2,12 @@
  * Created by zhaohang on 2016/7/25.
  */
 import React ,{Component}from 'react';
-import {View, Text, StyleSheet,TextInput,Image,ListView} from "react-native";
+import {View, Text, StyleSheet,TextInput,Image,ListView,TouchableHighlight} from "react-native";
 import { connect } from 'react-redux'
 import Button from "react-native-button";
 import Swipeout  from "react-native-swipeout";
+import listViewActions from '../../actions/listViewActions'
+import  {bindActionCreators} from 'redux'
 const styles = StyleSheet.create({
     row: {
         borderBottomColor: '#E0E0E0',
@@ -29,24 +31,52 @@ const styles = StyleSheet.create({
         marginLeft: 3
     }
 });
-const listView = (props) => {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const dataSource = ds.cloneWithRows([{
-        url: '../image/logo.png', title: '第四代活塞,谁发的第四代活塞,谁发的第四代活塞,谁发的', author: '张三', data: '2016-01-01'
-    }, {
-        url: '/src/image/login.png',
-        title: '库克将怒火几年级',
-        author: 'lily',
-        data: '2016-08-08'
-    }]);
-    return (
-        <ListView
-            dataSource={dataSource}
-            renderRow={(rowData) =>
-            <Swipeout right={[{text:'删除',backgroundColor:'red'}]} backgroundColor={'#FFF'}>
+class listView extends Component {
+    constructor(props) {
+        super(props);
+        //let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+            pageNum:1
+        };
+        this.getAllList = this.getAllList.bind(this);
+        this.pressRow = this.pressRow.bind(this);
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+        });
+    }
+
+    componentWillMount() {
+        //控件加载的时候先发起服务请求
+        this.props.getListRequest(1);
+    }
+    pressRow(id) {
+        this.props.toDesOfList(id);
+    }
+    getAllList() {
+        const pageNum = this.state.pageNum;
+
+        const pageTotal = Math.ceil(this.props.state.totalNum/10);
+        if (pageNum<pageTotal) {
+            this.state.pageNum = pageNum+1;
+            this.setState({pageNum: this.state.pageNum});
+            this.props.getListRequest(pageNum+1);
+        }
+
+    }
+    render() {
+       let data = this.props.state.listData;
+       let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+       let dataSource = ds.cloneWithRows(data);
+        return (
+            <ListView  enableEmptySections = {true} onEndReached = {this.getAllList} onEndReachedThreshold = {20}
+                       dataSource={dataSource}
+                renderRow={(rowData) =>
+                 <Swipeout right={[{text:'删除',backgroundColor:'red'}]} backgroundColor={'#FFF'}>
+                 <TouchableHighlight onPress={() => this.pressRow(rowData.id)}>
                 <View style={styles.row}>
                     <View>
-                        <Image style={styles.thumb} source={require('../../image/login.png')} />
+                        <Image style={styles.thumb} source={{uri:rowData.image}} />
                     </View>
                     <View>
                         <View>
@@ -56,18 +86,32 @@ const listView = (props) => {
                         </View>
                         <View>
                              <Text style={styles.desc}>
-                                  {rowData.author}  {rowData.data}
+                                  {rowData.author}  {rowData.date}
                              </Text>
                         </View>
                     </View>
                 </View>
+                </TouchableHighlight>
             </Swipeout>
+
+
             }
-        />
-    );
+            />
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        state:state.listViewReducer
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(listViewActions, dispatch);
 }
 
 export default connect(
-    (state) => ({
-    })
+    mapStateToProps,
+    mapDispatchToProps
 )(listView)

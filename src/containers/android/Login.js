@@ -74,6 +74,7 @@ class Login extends Component {
         this.login = this.login.bind(this);
     }
     login() {
+        console.log("test");
         const username = this.refs.username._lastNativeText;
         const password = this.refs.password._lastNativeText;
         const data = {
@@ -101,12 +102,12 @@ class Login extends Component {
                     </TextInput>
                 </View>
                 <View style={styles.buttonview}>
-                    <Text style={styles.logintext} onPress={this.login}>登 录</Text>
+                    <Button style={styles.logintext} onPress={this.login}>登 录</Button>
                 </View>
             </View>
         );
     }
-};
+}
 
 function mapStateToProps(state) {
     return {
