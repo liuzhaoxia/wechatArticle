@@ -10,7 +10,7 @@ const fetchMethod = {
 function jsonToQueryString(jsonObj) {
     let queryStr = "";
     Object.keys(jsonObj).map((key)=> {
-        const value = JSON.stringify(jsonObj[key]);
+        const value = encodeURIComponent(JSON.stringify(jsonObj[key]));
         queryStr += `${key}=${value}&`;
     });
 
@@ -26,6 +26,7 @@ function createFetch(url, method, jsonObj) {
         case fetchMethod.Get:
             {
                 const queryStr = jsonToQueryString(jsonObj);
+                console.log(`${url}?${queryStr}`);
                 const urlWithQueryStr = `${url}?${queryStr}`;
                 console.log(urlWithQueryStr);
                 const options = {
