@@ -11,7 +11,9 @@ import {
 } from 'react-native';
 //简单封装一个组件
 class CustomButton extends React.Component {
+
     render() {
+        console.log(this.props.text);
         return (
             <TouchableHighlight
                 style={styles.button}
@@ -47,6 +49,7 @@ class DataPickerDemo extends Component {
                 newState[stateKey + 'Text'] = date.toLocaleDateString();
                 newState[stateKey + 'Date'] = date;
             }
+            console.log(newState);
             this.setState(newState);
         } catch (message) {
             console.warn(`Error in example '${stateKey}': `, message);
@@ -54,11 +57,13 @@ class DataPickerDemo extends Component {
     }
 
     render() {
-        let date=this.props.Times;
+        let nowtime2=this.props.Times;
+        let date=new Date(nowtime2.substring(0,4),nowtime2.substring(5,7)-1,nowtime2.substring(8,10)).toLocaleDateString();
+            console.log(date);
         return (
             <View>
                 <CustomButton text={date}
-                              onPress={this.showPicker.bind(this, 'min', {date: this.state.minDate,minDate:new Date()})}/>
+                              onPress={this.showPicker.bind(this, 'min', {date: date,minDate:new Date()})}/>
             </View>
         );
     }
