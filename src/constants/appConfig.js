@@ -1,5 +1,5 @@
 const appConfig = {
-    serviceRoot: 'http://192.168.56.1:3000/'
+    serviceRoot: 'http://172.23.61.155:3000/'
 };
 
 export default appConfig;
