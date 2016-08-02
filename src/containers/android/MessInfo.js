@@ -3,14 +3,14 @@
  */
 
 import React, { Component } from 'react';
-import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules} from "react-native";
+import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules,Platform} from "react-native";
 import DataPickerDemo from './CustomButton'
 import Button from "react-native-button";
 import { connect } from 'react-redux';
 import DatePicker from './DatePickerDemo'
 import articleInfoActions from '../../actions/articleInfoActions'
 import  {bindActionCreators} from 'redux'
-import * as ImagePicker from 'react-native-image-picker'
+import  ImagePicker from 'react-native-image-picker'
 
 
 
@@ -256,7 +256,8 @@ class MessInfo extends React.Component {
                         <Text style={styles.textTitle}>图片文章:</Text>
                     </View>
                     <View>
-                        <Image source={{uri:this.state.infoData.image}} onLoad={this.onToImage} style={styles.uploadAvatar} />
+                        <Image source={{uri:this.state.infoData.image}}  style={styles.uploadAvatar} />
+                        <Text  onPress={this.onToImage}>选择图片</Text>
                     </View>
                 </View>
 
