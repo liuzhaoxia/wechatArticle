@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules,Platform} from "react-native";
+import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules,Plantform} from "react-native";
 import DataPickerDemo from './CustomButton'
 import Button from "react-native-button";
 import { connect } from 'react-redux';
@@ -11,10 +11,6 @@ import DatePicker from './DatePickerDemo'
 import articleInfoActions from '../../actions/articleInfoActions'
 import  {bindActionCreators} from 'redux'
 import  ImagePicker from 'react-native-image-picker'
-
-
-
-
 
 const styles = StyleSheet.create({
     container: {

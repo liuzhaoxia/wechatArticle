@@ -29,6 +29,7 @@ function createFetch(url, method, jsonObj) {
                 const queryStr = jsonToQueryString(jsonObj);
                 console.log(`${url}?${queryStr}`);
                 const urlWithQueryStr = `${url}?${queryStr}`;
+                console.log(urlWithQueryStr);
                 const options = {
                     method: fetchMethod.Get
                 };

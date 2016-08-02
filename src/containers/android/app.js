@@ -1,7 +1,6 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
-
 import React, { Component } from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
@@ -14,12 +13,12 @@ import helper from './../../utils/helper'
 import store from './../../store/store';
 import ArticleInfo from './../../containers/android/MessInfo'
 
+
 class App extends React.Component {
     constructor(props) {
         super(props);
         helper.bindMethod(this);
     }
-
     render() {
         return (
             <Provider store={store}>

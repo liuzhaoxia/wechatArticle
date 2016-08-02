@@ -102,12 +102,12 @@ class Login extends Component {
                     </TextInput>
                 </View>
                 <View style={styles.buttonview}>
-                    <Text style={styles.logintext} onPress={this.login}>登 录</Text>
+                    <Button style={styles.logintext} onPress={this.login}>登 录</Button>
                 </View>
             </View>
         );
     }
-};
+}
 
 function mapStateToProps(state) {
     return {
