@@ -6,12 +6,15 @@ import { createAction } from 'redux-actions';
 import listViewActionEnum from '../constants/listViewActionEnum'
 import { api, callApi } from '../apis/api'
 import { Actions } from "react-native-router-flux";
+import articleInfoAction from './articleInfoActions'
 const listViewActions = {
     setListView:createAction(listViewActionEnum.SET_LIST_VIEW),
     toDesOfList: (data)=> {
         return dispatch=> {
+            let p={tableName:"article",condition:"id = "+data};
             dispatch(
-                listViewActions.setListView(data)
+                articleInfoAction.getArticleInfoById(p)
+
             );
         }
     },

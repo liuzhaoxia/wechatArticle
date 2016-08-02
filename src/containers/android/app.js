@@ -11,6 +11,7 @@ import main from './../../components/android/Main';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import helper from './../../utils/helper'
 import store from './../../store/store';
+import ArticleInfo from './../../containers/android/MessInfo'
 
 
 class App extends React.Component {
@@ -32,6 +33,8 @@ class App extends React.Component {
                                    hideNavBar/>
                             <Scene key="ListView" direction="vertical" component={ListView} title="ListView"
                                                        hideNavBar/>
+                            <Scene key="ArticleInfo" direction="vertical" component={ArticleInfo} title="ArticleInfo"
+                                   hideNavBar/>
                         </Scene>
                         <Scene key="error" component={Error}/>
                     </Scene>

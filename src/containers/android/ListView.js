@@ -65,13 +65,13 @@ class listView extends Component {
 
     }
     render() {
-       let data = this.props.state.listData;
-       let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-       let dataSource = ds.cloneWithRows(data);
+        let data = this.props.state.listData;
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        let dataSource = ds.cloneWithRows(data);
         return (
             <ListView  enableEmptySections = {true} onEndReached = {this.getAllList} onEndReachedThreshold = {20}
                        dataSource={dataSource}
-                renderRow={(rowData) =>
+                       renderRow={(rowData) =>
                  <Swipeout right={[{text:'删除',backgroundColor:'red'}]} backgroundColor={'#FFF'}>
                  <TouchableHighlight onPress={() => this.pressRow(rowData.id)}>
                 <View style={styles.row}>
