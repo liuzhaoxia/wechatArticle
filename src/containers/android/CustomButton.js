@@ -11,9 +11,7 @@ import {
 } from 'react-native';
 //简单封装一个组件
 class CustomButton extends React.Component {
-
     render() {
-        console.log(this.props.text);
         return (
             <TouchableHighlight
                 style={styles.button}
@@ -29,14 +27,21 @@ class DataPickerDemo extends Component {
         super(props);
 
         this.state={
+            times:this.props.Times,
             presetDate: new Date(2016, 3, 5),
             allDate: new Date(2020, 4, 5),
             simpleText: '选择日期,默认今天',
-            minText: '选择日期,不能比今日再早',
             maxText: '选择日期,不能比今日再晚',
             presetText: '选择日期,指定2016/3/5',
         };
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            Times:nextProps.Times
+        });
+
+    }
+
     //进行创建时间日期选择器
     async showPicker(stateKey, options) {
         try {
@@ -49,23 +54,41 @@ class DataPickerDemo extends Component {
                 newState[stateKey + 'Text'] = date.toLocaleDateString();
                 newState[stateKey + 'Date'] = date;
             }
-            console.log(newState);
             this.setState(newState);
+            this.state.times=this.state.minText;
         } catch (message) {
             console.warn(`Error in example '${stateKey}': `, message);
         }
     }
 
     render() {
-        let nowtime2=this.props.Times;
-        let date=new Date(nowtime2.substring(0,4),nowtime2.substring(5,7)-1,nowtime2.substring(8,10)).toLocaleDateString();
-            console.log(date);
-        return (
-            <View>
-                <CustomButton text={date}
-                              onPress={this.showPicker.bind(this, 'min', {date: date,minDate:new Date()})}/>
-            </View>
-        );
+        let date=null;
+        if(this.state.minText){
+            return (
+                <View>
+                    <CustomButton text={this.state.minText}
+                                  onPress={this.showPicker.bind(this, 'min', {date: this.state.minDate,minDate:new Date()})}/>
+                </View>
+            );
+        }else{
+            let nowtime2=this.state.times;
+            let m=null;
+            if(nowtime2.substring(5,7)-1<10){
+                m=0+""+nowtime2.substring(5,7)-1;
+            }else{
+                m=nowtime2.substring(5,7)-1;
+            }
+            date=new Date(nowtime2.substring(0,4),m,nowtime2.substring(8,10)+1);
+
+            return (
+                <View>
+                    <CustomButton text={date.toLocaleDateString()}
+                                  onPress={this.showPicker.bind(this, 'min', {date: date,minDate:date})}/>
+                </View>
+            );
+        }
+
+
     }
 }
 const styles = StyleSheet.create({

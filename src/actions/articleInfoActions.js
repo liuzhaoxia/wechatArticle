@@ -30,16 +30,21 @@ const articleInfoActions = {
         return dispatch=> {
             callApi(
                 api.updateArticleInfo(data),
-                (data)=>dispatch(articleInfoActions.getArticleInfoRequest(data)),
+                (data)=>dispatch(articleInfoActions.getArticleInfoSusscesssRequest(data)),
                 (err)=>console.warn(err)
             );
+        }
+    },
+    getArticleInfoSusscesssRequest:(data)=>{
+        return dispatch=>{
+            console.log(data);
         }
     },
     addArticleInfoById: (data)=> {
         return dispatch=> {
             callApi(
-                api.updateArticleInfo(data),
-                (data)=>dispatch(articleInfoActions.getArticleInfoRequest(data)),
+                api.addArticleInfo(data),
+                (data)=>dispatch(articleInfoActions.getArticleInfoSusscesssRequest(data)),
                 (err)=>console.warn(err)
             );
         }
