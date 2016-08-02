@@ -27,7 +27,7 @@ class App extends React.Component {
                     <Scene key="modal" component={Modal}>
                         <Scene key="root" hideNavBar hideTabBar>
                             <Scene key="loginModule" direction="vertical" initial={true}>
-                                <Scene key="login" component={ImagePicker} title="Login"
+                                <Scene key="login" component={login} title="Login"
                                        hideNavBar/>
                             </Scene>
                             <Scene key="main" direction="vertical" component={main} title="Main"
