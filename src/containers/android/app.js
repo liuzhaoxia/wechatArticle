@@ -8,6 +8,7 @@ import { Provider, connect } from 'react-redux';
 import { Router, Scene, Modal } from 'react-native-router-flux';
 import login from './../../containers/android/Login';
 import ListView from './../../containers/android/ListView';
+import ImagePicker from './../../containers/android/ImagePicker';
 import main from './../../components/android/Main';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import helper from './../../utils/helper'
@@ -26,7 +27,7 @@ class App extends React.Component {
                     <Scene key="modal" component={Modal}>
                         <Scene key="root" hideNavBar hideTabBar>
                             <Scene key="loginModule" direction="vertical" initial={true}>
-                                <Scene key="login" component={login} title="Login"
+                                <Scene key="login" component={ImagePicker} title="Login"
                                        hideNavBar/>
                             </Scene>
                             <Scene key="main" direction="vertical" component={main} title="Main"
