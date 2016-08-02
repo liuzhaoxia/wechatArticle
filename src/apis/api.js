@@ -11,6 +11,21 @@ const api = {
         `${appConfig.serviceRoot}app/listAll`,
         fetchMethod.Get,
         {parameter: parameter}
+    ),
+    getArticleInfo: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}test/sql/select`,
+        fetchMethod.Get,
+        {parameter: parameter}
+    ),
+    updateArticleInfo: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}test/sql/update`,
+        fetchMethod.Get,
+        {parameter: parameter}
+    ),
+    addArticleInfo: (parameter)=> createFetch(
+        `${appConfig.serviceRoot}test/sql/add`,
+        fetchMethod.Get,
+        {parameter: parameter}
     )
 };
 

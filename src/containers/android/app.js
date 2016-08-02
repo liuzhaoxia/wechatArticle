@@ -1,7 +1,6 @@
 /**
  * Created by wangtun on 2016/7/21.
  */
-
 import React, { Component } from 'react';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
@@ -13,13 +12,14 @@ import main from './../../components/android/Main';
 import routeReducerCreator from './../../reducers/routeReducerCreator';
 import helper from './../../utils/helper'
 import store from './../../store/store';
+import ArticleInfo from './../../containers/android/MessInfo'
+
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         helper.bindMethod(this);
     }
-
     render() {
         return (
             <Provider store={store}>
@@ -34,6 +34,8 @@ class App extends React.Component {
                                    hideNavBar/>
                             <Scene key="ListView" direction="vertical" component={ListView} title="ListView"
                                                        hideNavBar/>
+                            <Scene key="ArticleInfo" direction="vertical" component={ArticleInfo} title="ArticleInfo"
+                                   hideNavBar/>
                         </Scene>
                         <Scene key="error" component={Error}/>
                     </Scene>
