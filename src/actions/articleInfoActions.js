@@ -2,13 +2,13 @@
  * Created by 123 on 2016/7/29.
  */
 import { createAction } from 'redux-actions';
-import listViewActionEnum from '../constants/listViewActionEnum'
+import articeInfoActionEnum from '../constants/articeInfoActionEnum'
 import { api, callApi } from '../apis/api'
 import { Actions } from "react-native-router-flux";
 
 const articleInfoActions = {
-    setArticleId:createAction(listViewActionEnum.SET_ARTICLEID_INFO),
-    setArticleData:createAction(listViewActionEnum.SET_ARTICLEDATA),
+    setArticleId:createAction(articeInfoActionEnum.SET_ARTICLEID_INFO),
+    setArticleData:createAction(articeInfoActionEnum.SET_ARTICLEDATA),
     getArticleInfoById: (data)=> {
         return dispatch=> {
             callApi(
@@ -37,7 +37,13 @@ const articleInfoActions = {
     },
     getArticleInfoSusscesssRequest:(data)=>{
         return dispatch=>{
-            console.log(data);
+            console.log(data.errcode)
+            if(data.errcode===0){
+                console.warn("成功")
+            }else{
+                console.warn("失败")
+            }
+
         }
     },
     addArticleInfoById: (data)=> {
@@ -47,6 +53,11 @@ const articleInfoActions = {
                 (data)=>dispatch(articleInfoActions.getArticleInfoSusscesssRequest(data)),
                 (err)=>console.warn(err)
             );
+        }
+    },
+    backListView:()=>{
+        return dispatch=>{
+            dispatch(Actions.ListView());
         }
     }
 

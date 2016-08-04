@@ -7,7 +7,6 @@ import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules,Pla
 import DataPickerDemo from './CustomButton'
 import Button from "react-native-button";
 import { connect } from 'react-redux';
-import DatePicker from './DatePickerDemo'
 import articleInfoActions from '../../actions/articleInfoActions'
 import  {bindActionCreators} from 'redux'
 import  ImagePicker from 'react-native-image-picker'
@@ -83,7 +82,7 @@ class MessInfo extends React.Component {
         this.state={
             language:"",
             infoData:this.props.infoData,
-            imageUri:""
+            avatarSource:{uri: this.props.infoData.image}
         };
         this.updateArticle=this.updateArticle.bind(this);
         this.backListView=this.backListView.bind(this);
@@ -113,17 +112,20 @@ class MessInfo extends React.Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                // You can display the image using either data:
-                const source = {uri: this.props.infoData.image, isStatic: true};
+                const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 
-                // uri (on iOS)
-                // const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-                // uri (on android)
-                //const source = {uri: response.uri, isStatic: true};
+                // or a reference to the platform specific asset location
+                if (Platform.OS === 'ios') {
+                    const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+                } else {
+                    const source = {uri: response.uri, isStatic: true};
+                }
 
-                //this.setState({
-                //    avatarSource: source
-                //});
+                this.state.infoData.image=source.uri;
+
+                this.setState({
+                    avatarSource: source
+                });
             }
         });
     }
@@ -137,29 +139,28 @@ class MessInfo extends React.Component {
         let title = this.refs.title._lastNativeText;
         let url = this.refs.url._lastNativeText;
         let author=this.refs.author._lastNativeText;
-        console.log(this.state.infoData.date);
         let pickerDate=this.state.infoData.date;
         let p={
             tableName:"article",
-            filed:" title='"+title+"',url='"+url+"',author='"+author+"',type="+this.state.infoData.type,
+            filed:" title='"+title+"',url='"+url+"',author='"+author+"',type="+this.state.infoData.type+",date='"+pickerDate+"',image='"+this.state.infoData.image+"'",
             condition:"id = "+this.state.infoData.id
         };
         this.props.updateArticleInfoById(p);
     }
 
     backListView(){
-
+        this.props.backListView();
     }
 
     addArticle(){
         let title = this.refs.title._lastNativeText;
         let url = this.refs.url._lastNativeText;
         let author=this.refs.author._lastNativeText;
-        let pickerDate=this.refs.pickerDate._lastNativeText;
+        let pickerDate=this.state.infoData.date;
         let p={
             tableName:"article",
-            filed:" title,url,author,type",
-            value:"'"+title+"','"+url+"','"+author+"',"+this.state.infoData.type
+            filed:" title,url,author,type,image",
+            value:"'"+title+"','"+url+"','"+author+"',"+this.state.infoData.type+"','"+this.state.infoData.image+"'"
         };
         this.props.addArticleInfoById(p);
     }
@@ -251,8 +252,8 @@ class MessInfo extends React.Component {
                     <View>
                         <Text style={styles.textTitle}>图片文章:</Text>
                     </View>
-                    <View>
-                        <Image source={{uri:this.state.infoData.image}}  style={styles.uploadAvatar} />
+                    <View style={styles.container}>
+                        <Image source={this.state.avatarSource}  style={styles.uploadAvatar} />
                         <Text  onPress={this.onToImage}>选择图片</Text>
                     </View>
                 </View>

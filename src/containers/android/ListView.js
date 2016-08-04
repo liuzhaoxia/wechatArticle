@@ -44,7 +44,7 @@ class listView extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
         });
-    }
+    }re
 
     componentWillMount() {
         //控件加载的时候先发起服务请求

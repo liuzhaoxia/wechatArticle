@@ -6,7 +6,14 @@ import articleInfoActions  from '../actions/articleInfoActions'
 import {ListView} from "react-native";
 
 const initialState = {
-    infoData:{}
+    infoData:{
+        title:'',
+        url:'',
+        author:'',
+        date:new Date(),
+        type:1,
+        image:''
+    }
 };
 
 const articleInfoReducer = handleActions({

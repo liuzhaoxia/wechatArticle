@@ -9,9 +9,11 @@ import {
     DatePickerAndroid,
     TouchableHighlight,
 } from 'react-native';
+import { connect } from 'react-redux';
 //简单封装一个组件
 class CustomButton extends React.Component {
     render() {
+
         return (
             <TouchableHighlight
                 style={styles.button}
@@ -25,19 +27,18 @@ class CustomButton extends React.Component {
 class DataPickerDemo extends Component {
     constructor(props){
         super(props);
-
         this.state={
-            times:this.props.Times,
             presetDate: new Date(2016, 3, 5),
             allDate: new Date(2020, 4, 5),
             simpleText: '选择日期,默认今天',
             maxText: '选择日期,不能比今日再晚',
             presetText: '选择日期,指定2016/3/5',
+            infoData:this.props.infoData
         };
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            Times:nextProps.Times
+            infoData:nextProps.infoData
         });
 
     }
@@ -55,7 +56,7 @@ class DataPickerDemo extends Component {
                 newState[stateKey + 'Date'] = date;
             }
             this.setState(newState);
-            this.state.times=this.state.minText;
+            this.state.infoData.date=this.state.minText;
         } catch (message) {
             console.warn(`Error in example '${stateKey}': `, message);
         }
@@ -71,7 +72,7 @@ class DataPickerDemo extends Component {
                 </View>
             );
         }else{
-            let nowtime2=this.state.times;
+            let nowtime2=this.props.Times;
             let m=null;
             if(nowtime2.substring(5,7)-1<10){
                 m=0+""+nowtime2.substring(5,7)-1;
@@ -79,7 +80,7 @@ class DataPickerDemo extends Component {
                 m=nowtime2.substring(5,7)-1;
             }
             date=new Date(nowtime2.substring(0,4),m,nowtime2.substring(8,10)+1);
-
+            console.log(date.toLocaleDateString());
             return (
                 <View>
                     <CustomButton text={date.toLocaleDateString()}
@@ -109,4 +110,14 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DataPickerDemo;
+function mapStateToProps(state) {
+    return {
+        infoData:state.articleInfoReducer.infoData
+    }
+}
+
+
+export default connect(
+    mapStateToProps,
+    null
+)(DataPickerDemo)
