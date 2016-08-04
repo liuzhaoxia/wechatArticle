@@ -39,9 +39,13 @@ function createFetch(url, method, jsonObj) {
             break;
         case fetchMethod.Post:
             {
-                const queryStr = jsonToQueryString(jsonObj);
+                const queryStr = JSON.stringify(jsonObj);
                 const options = {
                     method: fetchMethod.Post,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
                     body: queryStr
                 };
                 console.log(url);
