@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules,Plantform} from "react-native";
+import {View, Text,TextInput,ListView ,StyleSheet,Picker,Image,NativeModules,Platform} from "react-native";
 import DataPickerDemo from './CustomButton'
 import Button from "react-native-button";
 import { connect } from 'react-redux';
@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:"row",
         padding: 5,
-        height:40
+        height:40,
+        marginTop:10,
     },
     textTitle:{
         width:70,
@@ -45,21 +46,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#1DBAF1',
         margin: 20,
         borderRadius: 6,
-        width:75,
+        width:130,
         height:40,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     infoText: {
         fontSize: 15,
         color: '#FFFFFF',
         marginTop: 10,
         marginBottom: 10,
-        width:70,
+        width:40,
         margin:10,
+
     },
     uploadAvatar:{
-        width:56,
-        height:56
-
+        width:36,
+        height:36,
     }
 });
 
@@ -85,7 +88,6 @@ class MessInfo extends React.Component {
             avatarSource:{uri: this.props.infoData.image}
         };
         this.updateArticle=this.updateArticle.bind(this);
-        this.backListView=this.backListView.bind(this);
         this.addArticle=this.addArticle.bind(this);
         this.onChangeType=this.onChangeType.bind(this);
         this.onToImage=this.onToImage.bind(this);
@@ -121,7 +123,7 @@ class MessInfo extends React.Component {
                     const source = {uri: response.uri, isStatic: true};
                 }
 
-                this.state.infoData.image=source.uri;
+                this.state.infoData.image={uri:source.uri,fileName:response.fileName};
 
                 this.setState({
                     avatarSource: source
@@ -136,32 +138,48 @@ class MessInfo extends React.Component {
     }
 
     updateArticle(){
+        let p=null;
         let title = this.refs.title._lastNativeText;
         let url = this.refs.url._lastNativeText;
         let author=this.refs.author._lastNativeText;
         let pickerDate=this.state.infoData.date;
-        let p={
-            tableName:"article",
-            filed:" title='"+title+"',url='"+url+"',author='"+author+"',type="+this.state.infoData.type+",date='"+pickerDate+"',image='"+this.state.infoData.image+"'",
-            condition:"id = "+this.state.infoData.id
-        };
+        if(this.state.infoData.image.fileName){
+            p={
+                tableName:"article",
+                filed:" title='"+title+"',url='"+url+"',author='"+author+"',type="+this.state.infoData.type+",date='"+pickerDate+"'",
+                image:this.state.infoData.image,
+                condition:"id = "+this.state.infoData.id
+            };
+        }else{
+            p={
+                tableName:"article",
+                filed:" title='"+title+"',url='"+url+"',author='"+author+"',type="+this.state.infoData.type+",date='"+pickerDate+"'",
+                condition:"id = "+this.state.infoData.id
+            };
+        }
+
         this.props.updateArticleInfoById(p);
     }
-
-    backListView(){
-        this.props.backListView();
-    }
-
     addArticle(){
+        let p=null;
         let title = this.refs.title._lastNativeText;
         let url = this.refs.url._lastNativeText;
         let author=this.refs.author._lastNativeText;
         let pickerDate=this.state.infoData.date;
-        let p={
-            tableName:"article",
-            filed:" title,url,author,type,image",
-            value:"'"+title+"','"+url+"','"+author+"',"+this.state.infoData.type+"','"+this.state.infoData.image+"'"
-        };
+        if(this.state.infoData.image.fileName) {
+             p = {
+                tableName: "article",
+                filed: " title,url,author,type",
+                image: this.state.infoData.image,
+                value: "'" + title + "','" + url + "','" + author + "'," + this.state.infoData.type
+            };
+        }else{
+            p = {
+                tableName: "article",
+                filed: " title,url,author,type",
+                value: "'" + title + "','" + url + "','" + author + "'," + this.state.infoData.type
+            };
+        }
         this.props.addArticleInfoById(p);
     }
 
@@ -264,9 +282,6 @@ class MessInfo extends React.Component {
                     </View>
                     <View style={styles.textView}>
                         <Text style={styles.infoText} onPress={this.addArticle}>新增</Text>
-                    </View>
-                    <View style={styles.textView}>
-                        <Text style={styles.infoText} onPress={this.backListView}>返回</Text>
                     </View>
                 </View>
 

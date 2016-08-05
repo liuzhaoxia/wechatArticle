@@ -56,7 +56,16 @@ class DataPickerDemo extends Component {
                 newState[stateKey + 'Date'] = date;
             }
             this.setState(newState);
-            this.state.infoData.date=this.state.minText;
+            let dateF=this.state.minText;
+            let arr=dateF.split("/");
+            if(arr[1]<10){
+                arr[1]=0+arr[1];
+            }
+            if(arr[2]<10){
+                arr[2]=0+arr[2];
+            }
+            dateF=arr[0]+"/"+arr[1]+"/"+arr[2];
+            this.state.infoData.date=dateF;
         } catch (message) {
             console.warn(`Error in example '${stateKey}': `, message);
         }
@@ -64,26 +73,60 @@ class DataPickerDemo extends Component {
 
     render() {
         let date=null;
+        let dateF=null;
         if(this.state.minText){
+            dateF=this.state.minText;
+            let arr=dateF.split("/");
+            if(arr[1]<10){
+                arr[1]=0+arr[1];
+            }
+            if(arr[2]<10){
+                arr[2]=0+arr[2];
+            }
+            dateF=arr[0]+"/"+arr[1]+"/"+arr[2];
             return (
                 <View>
-                    <CustomButton text={this.state.minText}
-                                  onPress={this.showPicker.bind(this, 'min', {date: this.state.minDate,minDate:new Date()})}/>
+                    <CustomButton text={dateF}
+                                  onPress={this.showPicker.bind(this, 'min', {date: this.state.minDate,minDate:this.state.minDate})}/>
                 </View>
             );
         }else{
-            let nowtime2=this.props.Times;
-            let m=null;
-            if(nowtime2.substring(5,7)-1<10){
-                m=0+""+nowtime2.substring(5,7)-1;
+            if(this.props.Times==null){
+                date=new Date();
+                dateF=date.toLocaleDateString();
+                let arr1=dateF.split("/");
+                if(arr1[1]<10){
+                    arr1[1]=0+arr1[1];
+                }
+                if(arr1[2]<10){
+                    arr1[2]=0+arr1[2];
+                }
+                dateF=arr1[0]+"/"+arr1[1]+"/"+arr1[2];
             }else{
-                m=nowtime2.substring(5,7)-1;
+                let nowtime2=this.props.Times;
+                let m=null;
+                if(parseInt(nowtime2.substring(5,7))-1<10){
+                    m=0+""+parseInt(nowtime2.substring(5,7))-1;
+                }else{
+                    m=parseInt(nowtime2.substring(5,7))-1;
+                }
+                date=new Date(nowtime2.substring(0,4),m,parseInt(nowtime2.substring(8,10))+1);
+                dateF=date.toLocaleDateString();
+                let arr2=dateF.split("/");
+                if(arr2[1]<10){
+                    arr2[1]=0+arr2[1];
+                }
+                if(arr2[2]<10){
+                    arr2[2]=0+""+(arr2[2]-1);
+                }
+                dateF=arr2[0]+"/"+arr2[1]+"/"+arr2[2];
             }
-            date=new Date(nowtime2.substring(0,4),m,nowtime2.substring(8,10)+1);
-            console.log(date.toLocaleDateString());
+
+
+
             return (
                 <View>
-                    <CustomButton text={date.toLocaleDateString()}
+                    <CustomButton text={dateF}
                                   onPress={this.showPicker.bind(this, 'min', {date: date,minDate:date})}/>
                 </View>
             );

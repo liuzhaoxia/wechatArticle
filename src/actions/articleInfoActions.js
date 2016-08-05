@@ -2,13 +2,13 @@
  * Created by 123 on 2016/7/29.
  */
 import { createAction } from 'redux-actions';
-import articeInfoActionEnum from '../constants/articeInfoActionEnum'
+import articleInfoActionEnum from '../constants/articeInfoActionEnum'
 import { api, callApi } from '../apis/api'
 import { Actions } from "react-native-router-flux";
 
 const articleInfoActions = {
-    setArticleId:createAction(articeInfoActionEnum.SET_ARTICLEID_INFO),
-    setArticleData:createAction(articeInfoActionEnum.SET_ARTICLEDATA),
+    setArticleId:createAction(articleInfoActionEnum.SET_ARTICLEID_INFO),
+    setArticleData:createAction(articleInfoActionEnum.SET_ARTICLEDATA),
     getArticleInfoById: (data)=> {
         return dispatch=> {
             callApi(
@@ -37,13 +37,7 @@ const articleInfoActions = {
     },
     getArticleInfoSusscesssRequest:(data)=>{
         return dispatch=>{
-            console.log(data.errcode)
-            if(data.errcode===0){
-                console.warn("成功")
-            }else{
-                console.warn("失败")
-            }
-
+            console.warn("操作成功")
         }
     },
     addArticleInfoById: (data)=> {
